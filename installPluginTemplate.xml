@@ -1,6 +1,6 @@
 <project name="Install TeamCity.PluginTemplate" default="install.plugin" basedir=".">
 
-  <property name="plugin.template.archive.url" value="https://github.com/vbedrosova/TeamCity.PluginTemplate/archive"/>
+  <property name="plugin.template.archive.url" value="https://github.com/jonnyzzz/TeamCity.PluginTemplate/archive"/>
 
   
   <target name="entry.point">
