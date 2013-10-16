@@ -2,17 +2,17 @@
 
   <property name="plugin.template.archive.url" value="https://github.com/jonnyzzz/TeamCity.PluginTemplate/archive"/>
 
-  
+
   <target name="entry.point">
-	
+
     <echo message="This scipt will create IntelliJ IDEA project almost ready for developing a TeamCity plugin."/>
 
-    <input message="Please enter the plugin name:" addproperty="plugin.name" />
-    <input message="Will the plugin have both server and agent parts? " validargs="y,n" addproperty="plugin.serverAndAgentStr" />
-	
+    <input message="Please enter the plugin name:" addproperty="plugin.name"/>
+    <input message="Will the plugin have both server and agent parts? " validargs="y,n" addproperty="plugin.serverAndAgentStr"/>
+
   </target>
-  
-  
+
+
   <target name="check.plugin.name">
     <fail message="plugin.name not specified">
       <condition>
@@ -22,84 +22,84 @@
       </condition>
     </fail>
 
-	<fail message="plugin.name is empty">
+    <fail message="plugin.name is empty">
       <condition>
         <length string="${plugin.name}" trim="true" when="eq" length="0"/>
       </condition>
-	</fail>
-    
-	<property name="plugin.path" value="${basedir}/${plugin.name}"/>
+    </fail>
+
+    <property name="plugin.path" value="${basedir}/${plugin.name}"/>
 
   </target>
 
 
   <target name="install.plugin" depends="entry.point, check.plugin.name, check.plugin.type, prepare.template">
-	
-	<replace dir="${plugin.path}" token="PLUGIN_NAME" value="${plugin.name}" summary="true">
+
+    <replace dir="${plugin.path}" token="PLUGIN_NAME" value="${plugin.name}" summary="true">
       <include name="**"/>
     </replace>
-	
+
   </target>
-   
-  
+
+
   <target name="check.plugin.type">
     <condition property="plugin.serverAndAgent">
-	  <equals arg1="${plugin.serverAndAgentStr}" arg2="y"/>
+      <equals arg1="${plugin.serverAndAgentStr}" arg2="y"/>
     </condition>
-  </target>  
-   
-  
+  </target>
+
+
   <target name="prepare.template" depends="download.serverOnly.template, download.serverAndAgent.template"/>
-   
-  
+
+
   <target name="download.serverAndAgent.template" if="plugin.serverAndAgent">
     <antcall target="download.template">
-	  <param name="template.name" value="serverAndAgent"/>
-	</antcall>
+      <param name="template.name" value="serverAndAgent"/>
+    </antcall>
   </target>
-  
-  
+
+
   <target name="download.serverOnly.template" unless="plugin.serverAndAgent">
     <antcall target="download.template">
-	  <param name="template.name" value="serverOnly"/>
-	</antcall>
+      <param name="template.name" value="serverOnly"/>
+    </antcall>
   </target>
-  
-  
+
+
   <target name="download.template">
-  
+
     <property name="template.zip" value="${template.name}.zip"/>
     <property name="template.url" value="${plugin.template.archive.url}/${template.zip}"/>
-	<get dest="${basedir}" verbose="true">
+    <get dest="${basedir}" verbose="true">
       <url url="${template.url}"/>
     </get>
 
-	<delete dir="${plugin.path}"/>
-	<mkdir dir="${plugin.path}"/>
-	
+    <delete dir="${plugin.path}"/>
+    <mkdir dir="${plugin.path}"/>
+
     <unzip dest="${basedir}" src="${basedir}/${template.zip}"/>
-	
-	<echo message="Deleting template ${template.zip}"/>
-	<delete>
+
+    <echo message="Deleting template ${template.zip}"/>
+    <delete>
       <fileset dir="${basedir}">
         <include name="${template.zip}"/>
       </fileset>
-	</delete>
+    </delete>
 
     <property name="template.path" value="${basedir}/TeamCity.PluginTemplate-${template.name}"/>
 
-	<move todir="${plugin.path}">
+    <move todir="${plugin.path}">
       <fileset dir="${template.path}" defaultexcludes="no">
         <include name="**/*"/>
       </fileset>
       <compositemapper>
-	    <mapper type="regexp" from="^(.*)PLUGIN_NAME(.*)$" to="\1${plugin.name}\2"/>
+        <mapper type="regexp" from="^(.*)PLUGIN_NAME(.*)$" to="\1${plugin.name}\2"/>
         <mapper type="identity"/>
-	  </compositemapper>
+      </compositemapper>
     </move>
 
-	<delete dir="${template.path}"/>
+    <delete dir="${template.path}"/>
 
-	</target>
-  
+  </target>
+
 </project>
