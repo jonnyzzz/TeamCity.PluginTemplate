@@ -22,6 +22,7 @@ What's next?
  - Rename `server/src/META-INF/build-server-plugin-PLUGIN_NAME.xml` to put your plugin name here and update `server/server.iml`
  - Update plugin .jar file name in `plugin` artifact
  - Update plugin .zip file name in `plugin-zip` artifact
+ - Update test suite and tests with your plugin name
  - Have fun!
 
 
