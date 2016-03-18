@@ -2,11 +2,13 @@
   <library name="Common-Api">
     <CLASSES>
       <root url="jar://$TeamCityDistribution$/devPackage/common-api.jar!/" />
+      <root url="jar://$TeamCityDistribution$/devPackage/serviceMessages.jar!/" />
       <root url="jar://$TeamCityDistribution$/webapps/ROOT/WEB-INF/lib/annotations.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://$TeamCityDistribution$/devPackage/src/openApi-source.jar!/" />
+      <root url="jar://$TeamCityDistribution$/devPackage/src/serviceMessages-src.jar!/" />
     </SOURCES>
   </library>
 </component>
