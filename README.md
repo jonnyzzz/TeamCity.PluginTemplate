@@ -36,7 +36,7 @@ Steps to fork template to a given repository
  - git merge template/serverAndAgent
  - git remote rm template
 
-Those steps makes you repo contain default template indise. 
+Those steps makes you repo contain default template inside. 
 It's most easiest way to start.
 
 
